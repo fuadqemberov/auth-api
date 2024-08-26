@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.default_schema: bloggapp
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8080
+
+security:
+  jwt:
+    secret-key: 416941a777ab3e7f17f7056e3cbdcf699cf8d6b3dc0a65eeda3d6674fdb3a584
+    expiration-time: 1800000
