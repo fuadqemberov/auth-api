@@ -4,9 +4,11 @@ import az.company.auth_api.dto.AuthResponseDto;
 import az.company.auth_api.dto.LoginUserDto;
 import az.company.auth_api.dto.RegisterUserDto;
 import az.company.auth_api.entity.RefreshToken;
+import az.company.auth_api.entity.RoleName;
 import az.company.auth_api.entity.User;
 import az.company.auth_api.repository.RefreshTokenRepository;
 import az.company.auth_api.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +25,13 @@ public class AuthenticationService {
     private final RefreshTokenService refreshTokenService;
     private final RefreshTokenRepository repository;
 
+    @Transactional
     public AuthResponseDto signup(RegisterUserDto input) {
         User user = User.builder()
                 .email(input.getEmail())
                 .name(input.getName())
+                .surname(input.getSurname())
+                .role(RoleName.ROLE_USER)
                 .password(passwordEncoder.encode(input.getPassword()))
                 .build();
 

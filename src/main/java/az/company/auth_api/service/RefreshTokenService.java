@@ -14,6 +14,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {
+
     @Value("${security.jwt.refresh-token.expiration}")
     private Long refreshTokenDurationMs;
 
@@ -35,7 +36,6 @@ public class RefreshTokenService {
             refreshTokenRepository.delete(token);
             throw new RuntimeException("Refresh token was expired. Please make a new signin request");
         }
-
         return token;
     }
 

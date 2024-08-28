@@ -60,8 +60,9 @@ private final HandlerExceptionResolver handlerExceptionResolver;
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
-        }
-
 
     }
+
+
+}
 
