@@ -1,11 +1,10 @@
 package az.company.auth_api.controller;
 
-import az.company.auth_api.dto.LoginResponse;
+import az.company.auth_api.dto.AuthResponseDto;
 import az.company.auth_api.dto.LoginUserDto;
+import az.company.auth_api.dto.RefreshTokenRequest;
 import az.company.auth_api.dto.RegisterUserDto;
-import az.company.auth_api.entity.User;
 import az.company.auth_api.service.AuthenticationService;
-import az.company.auth_api.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,29 +12,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/auth")
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
-        return ResponseEntity.ok(registeredUser);
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponseDto> register(@RequestBody RegisterUserDto request) {
+        return ResponseEntity.ok(authenticationService.signup(request));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthResponseDto> authenticate(@RequestBody LoginUserDto request) {
+        return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
 
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        LoginResponse loginResponse = LoginResponse.builder()
-                .token(jwtToken)
-                .expiresIn(jwtService.getExpirationTime()).build();
-
-        return ResponseEntity.ok(loginResponse);
+    @PostMapping("/refresh-token")
+    public ResponseEntity<AuthResponseDto> refreshToken(@RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authenticationService.refreshToken(request.getRefreshToken()));
     }
 }
