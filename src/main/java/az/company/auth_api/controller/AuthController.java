@@ -4,6 +4,8 @@ import az.company.auth_api.dto.AuthResponseDto;
 import az.company.auth_api.dto.LoginUserDto;
 import az.company.auth_api.dto.RefreshTokenRequest;
 import az.company.auth_api.dto.RegisterUserDto;
+import az.company.auth_api.dto.TokenResponse;
+import az.company.auth_api.dto.UserDto;
 import az.company.auth_api.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +21,17 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDto> register(@RequestBody RegisterUserDto request) {
+    public ResponseEntity<UserDto> register(@RequestBody RegisterUserDto request) {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthResponseDto> authenticate(@RequestBody LoginUserDto request) {
+    public ResponseEntity<TokenResponse> authenticate(@RequestBody LoginUserDto request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<AuthResponseDto> refreshToken(@RequestBody RefreshTokenRequest request) {
-        return ResponseEntity.ok(authenticationService.refreshToken(request.getRefreshToken()));
+    public ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authenticationService.refreshToken());
     }
 }
