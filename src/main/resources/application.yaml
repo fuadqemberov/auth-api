@@ -21,4 +21,3 @@ security:
     refresh-expiration-time: 18000000
     refresh-token:
       expiration: 604800000
-

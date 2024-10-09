@@ -82,19 +82,19 @@ public class AuthenticationService {
             return true;
 
         } catch (ExpiredJwtException expEx) {
-            log.error("Token expired", expEx);
+            //log.warn("Token expired", expEx);
             throw new ForbiddenException(JwtExceptionCodes.EXPIRED_JWT_ERROR);
 
         } catch (UnsupportedJwtException unsEx) {
-            log.error("Unsupported jwt", unsEx);
+            //log.warn("Unsupported jwt", unsEx);
             throw new ForbiddenException(JwtExceptionCodes.UNSUPPORTED_JWT_ERROR);
 
         } catch (MalformedJwtException mjEx) {
-            log.error("Malformed jwt", mjEx);
+            //log.warn("Malformed jwt", mjEx);
             throw new ForbiddenException(JwtExceptionCodes.MALFORMED_JWT_ERROR);
 
         } catch (JwtException e) {
-            log.error("Invalid token", e);
+            //log.warn("Invalid token", e);
             throw new ForbiddenException(JwtExceptionCodes.JWT_ERROR);
         }
     }
