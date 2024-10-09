@@ -1,4 +1,4 @@
-package az.company.auth_api.config;
+package az.company.auth_api.security;
 
 import lombok.Getter;
 import lombok.Setter;

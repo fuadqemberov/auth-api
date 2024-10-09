@@ -1,4 +1,4 @@
-package az.company.auth_api.config;
+package az.company.auth_api.security;
 
 import az.company.auth_api.service.AuthenticationService;
 import az.company.auth_api.service.JwtService;

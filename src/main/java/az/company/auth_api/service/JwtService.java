@@ -1,6 +1,6 @@
 package az.company.auth_api.service;
 
-import az.company.auth_api.config.JwtAuthentication;
+import az.company.auth_api.security.JwtAuthentication;
 import az.company.auth_api.dto.TokenResponse;
 import az.company.auth_api.entity.User;
 import io.jsonwebtoken.Claims;
