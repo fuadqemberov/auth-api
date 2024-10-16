@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "userr")
+@Table(name = "users")
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
@@ -29,6 +30,7 @@ public class User {
     String email;
     LocalDateTime createdDate;
     LocalDateTime updatedAt;
-    RoleName role;
+
+
 
 }
