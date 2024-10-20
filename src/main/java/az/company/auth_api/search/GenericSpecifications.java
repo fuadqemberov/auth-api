@@ -11,13 +11,23 @@ import java.time.LocalDate;
 public class GenericSpecifications {
 
     public static <T> Specification<T> stringEquals(String fieldName, String value) {
-        return (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->
-                value == null ? cb.isNull(root.get(fieldName)) : cb.equal(root.get(fieldName), value);
+        if(value != null){
+            return (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->
+                    value == null ? cb.isNull(root.get(fieldName)) : cb.equal(root.get(fieldName), value);
+        }
+        else {
+            return null;
+        }
     }
 
     public static <T> Specification<T> stringContains(String fieldName, String value) {
-        return (Root<T> root,CriteriaQuery<?> query, CriteriaBuilder cb) ->
-                value == null ? null : cb.like(cb.lower(root.get(fieldName)), "%" + value.toLowerCase() + "%");
+        if(value != null) {
+            return (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->
+                    value == null ? null : cb.like(cb.lower(root.get(fieldName)), "%" + value.toLowerCase() + "%");
+        }
+        else {
+            return null;
+        }
     }
 
     public static <T> Specification<T> booleanEquals(String fieldName, Boolean value) {
@@ -26,8 +36,13 @@ public class GenericSpecifications {
     }
 
     public static <T> Specification<T> numberEquals(String fieldName, Number value) {
-        return (Root<T> root,CriteriaQuery<?> query, CriteriaBuilder cb) ->
+        if(value != null) {
+        return (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->
                 value == null ? cb.isNull(root.get(fieldName)) : cb.equal(root.get(fieldName), value);
+
+    } else {
+            return null;
+        }
     }
 
     public static <T> Specification<T> numberGreaterThan(String fieldName, Number value) {
