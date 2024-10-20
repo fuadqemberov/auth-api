@@ -33,10 +33,10 @@ public class Employee {
     private Date hireDt;
 
     @Column(name = "salary")
-    private double salary;
+    private Double salary;
 
     @Column(name = "commission", nullable = true)
-    private double commission;
+    private Double commission;
 
     @ManyToOne
     @JoinColumn(name = "dep_id")

@@ -11,7 +11,7 @@ public class EmployeeDto {
     private String jobNm;
     private Long manager_id;
     private Date hireDt;
-    private double salary;
-    private double commission;
+    private Double salary;
+    private Double commission;
     private String departmentName;
 }
