@@ -17,10 +17,3 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
-
-
-  redisinsight:
-    image: redislabs/redisinsight
-    container_name: redisinsight
-    ports:
-      - "8001:8001"

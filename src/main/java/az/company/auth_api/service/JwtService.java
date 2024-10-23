@@ -66,8 +66,7 @@ public class JwtService {
         if (Objects.isNull(authHeader) || !authHeader.startsWith("Bearer ")) {
             return null;
         }
-        String jwt = authHeader.substring(7);
-        return jwt;
+        return authHeader.substring(7);
     }
 
     public  JwtAuthentication generate(Claims claims) {
