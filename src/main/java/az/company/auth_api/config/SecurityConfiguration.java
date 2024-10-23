@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                                 "/api-docs/**",         // Additional API docs
                                 "/auth/**"     ,
                                 "/swagger-resources/**",
+                                "api/employee/**",
                                 "/api/test/**",
                                 "/webjars/**" // Any other open routes, e.g., authentication
                         ).permitAll()
