@@ -29,6 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -46,11 +48,14 @@ public class AuthenticationService {
 
     @Transactional
     public UserDto signup(RegisterUserDto input) {
+        System.out.println(input.getPrice());
         User user = User.builder()
                 .email(input.getEmail())
                 .name(input.getName())
                 .surname(input.getSurname())
                 .password(passwordEncoder.encode(input.getPassword()))
+                .price(input.getPrice())
+                .createdDate(LocalDateTime.now())
                 .build();
 
         User savedUser = userRepository.save(user);

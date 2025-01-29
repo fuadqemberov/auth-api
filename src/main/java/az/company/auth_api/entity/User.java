@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class User {
     String surname;
     String password;
     String email;
+    BigDecimal price;
     LocalDateTime createdDate;
     LocalDateTime updatedAt;
 

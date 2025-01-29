@@ -1,12 +1,12 @@
 package az.company.auth_api.controller;
 
-import az.company.auth_api.dto.AuthResponseDto;
 import az.company.auth_api.dto.LoginUserDto;
 import az.company.auth_api.dto.RefreshTokenRequest;
 import az.company.auth_api.dto.RegisterUserDto;
 import az.company.auth_api.dto.TokenResponse;
 import az.company.auth_api.dto.UserDto;
 import az.company.auth_api.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody RegisterUserDto request) {
+    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterUserDto request) {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 
