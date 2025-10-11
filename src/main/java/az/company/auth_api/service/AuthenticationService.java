@@ -5,13 +5,13 @@ import az.company.auth_api.dto.LoginUserDto;
 import az.company.auth_api.dto.RegisterUserDto;
 import az.company.auth_api.dto.TokenResponse;
 import az.company.auth_api.dto.UserDto;
-import az.company.auth_api.entity.RoleName;
 import az.company.auth_api.entity.User;
 import az.company.auth_api.exception.JwtExceptionCodes;
 import az.company.auth_api.exception.ForbiddenException;
 import az.company.auth_api.exception.NotFoundException;
 import az.company.auth_api.mapper.UserMapper;
 import az.company.auth_api.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -21,15 +21,12 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -42,6 +39,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final UserMapper userMapper;
     private final ModelMapper mapper;
+    private final ObjectMapper objectMapper;
 
     @Value("${security.jwt.secret}")
     private String jwtSecret;
@@ -63,7 +61,8 @@ public class AuthenticationService {
     }
 
     public TokenResponse authenticate(LoginUserDto input) {
-        User user = userRepository.findByEmail(input.getEmail()).orElseThrow(() -> new NotFoundException("User not found", "404"));
+        User user = userRepository.findByEmail(input.getEmail())
+                .orElseThrow(() -> new NotFoundException("User not found", "404"));
         return jwtService.issueToken(user);
     }
 
@@ -71,30 +70,20 @@ public class AuthenticationService {
         String username = getUsername();
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new NotFoundException("User not found", "404"));
-
         return jwtService.issueToken(user);
     }
-
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
-
         } catch (ExpiredJwtException expEx) {
-            //log.warn("Token expired", expEx);
             throw new ForbiddenException(JwtExceptionCodes.EXPIRED_JWT_ERROR);
-
         } catch (UnsupportedJwtException unsEx) {
-            //log.warn("Unsupported jwt", unsEx);
             throw new ForbiddenException(JwtExceptionCodes.UNSUPPORTED_JWT_ERROR);
-
         } catch (MalformedJwtException mjEx) {
-            //log.warn("Malformed jwt", mjEx);
             throw new ForbiddenException(JwtExceptionCodes.MALFORMED_JWT_ERROR);
-
         } catch (JwtException e) {
-            //log.warn("Invalid token", e);
             throw new ForbiddenException(JwtExceptionCodes.JWT_ERROR);
         }
     }
@@ -113,6 +102,4 @@ public class AuthenticationService {
                 .map(authentication -> mapper.map(authentication.getCredentials(), JwtCredentials.class))
                 .orElseThrow(() -> new RuntimeException("JwtExceptionCodes.UNAUTHORIZED"));
     }
-
 }
-
